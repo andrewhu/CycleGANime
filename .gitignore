@@ -1,0 +1,20 @@
+# Test outputs
+results*
+
+# Saved models
+checkpoints/
+
+# Datasets
+data/
+
+.ipynb_checkpoints/  
+__pycache__/
+
+# Virtual environments
+venv/
+
+# Loss results
+loss.png
+
+favorites/
+
