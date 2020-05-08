@@ -2,8 +2,9 @@
 Automatic lineart colorization with [CycleGAN](https://junyanz.github.io/CycleGAN/)
 
 <!-- <kbd><> -->
-![splash](splash.jpg)
-
+<kbd>
+<img src="splash.jpg">
+</kbd>
 
 
 ## Dependencies
