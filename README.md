@@ -1,11 +1,10 @@
 # CycleGANime
 Automatic lineart colorization with [CycleGAN](https://junyanz.github.io/CycleGAN/)
 
-<!-- <kbd><> -->
-<kbd>
-<img src="splash.jpg">
-</kbd>
+Demo: [cycleganime.drew.hu](https://cyclegan.drew.hu) \
+Blog post: [blog.drew.hu/cycleganime](https://blog.drew.hu/cycleganime)
 
+<img src="splash.jpg">
 
 ## Dependencies
 Tested on Ubuntu 20.04, 2080ti, Python 3.8, Pytorch 1.5, CUDA 10.2
@@ -38,7 +37,7 @@ With a dataset of ~1,000 256x256 images, batch size 1, training takes ~300s per 
 ## Training tips
 * Once the model starts to converge, results can vary greatly depending on the last few images it was fed. Either save results+models often and pick your favorite, or try fine-tuning at the end of training.
 
-* If your images are too big to fit in GPU memory, specify a `CROP_SIZE` which is small enough to fit. For example, I had some issues training `512x512` images on a 2080ti, so I chose a crop size of 480px.
+* If you're running out of GPU memory, specify a `CROP_SIZE` which is small enough to fit.
 
 * Make sure to monitor the losses of your networks (generator A/B, discriminator A/B) and make sure they're balanced. For example, if the discriminator loss converges too quickly, try one of: 
   * Increasing the generator learning rate
@@ -47,12 +46,10 @@ With a dataset of ~1,000 256x256 images, batch size 1, training takes ~300s per 
   * The list goes on. For more tips and tricks, see Soumith Chintala's [How to train a GAN?](https://github.com/soumith/ganhacks).
 
   But even then, loss doesn't really tell you how well your model is doing, so make sure to have a set of images to validate your model with.
-  
-  
-## Todo
-* Online demo
-* Pretrained models
-* Prune trained models
+
+## Pretrained models
+Coming soon
+<!-- Pretrained models: [Download (45.5MB)](https://files.drew.hu/cycleganime_model.zip) -->
 
 
 ## References
