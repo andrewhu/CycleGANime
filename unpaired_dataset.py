@@ -62,15 +62,15 @@ class UnpairedDataset(torch.utils.data.Dataset):
         # Iteratively brighten or darken non-white pixels
         if initial_mean < mean: # image is darker
             for _ in range(max_iters):
-                im_mean = im[np.where(im<254)].mean()
+                im_mean = im[im<254].mean()
                 if im_mean > mean: # If our image is bright enough
                     break
                 x = abs(mean - im_mean)/255 + 0.005
                 im[im<254] = im[im<254]*(1-x)+255*x # Brighten image
         else: # image is brighter
             for _ in range(max_iters):
-                im_mean = im[np.where(im<254)].mean()
-                if im_mean < mean: # If our iamge is dark enough
+                im_mean = im[im<254].mean()
+                if im_mean < mean: # If our image is dark enough
                     break
                 im[im<254] = im[im<254] * 0.995 - 255 * .005 # Darken image
 
@@ -104,6 +104,6 @@ def get_transforms(grayscale):
         transform_list.append(transforms.Grayscale(3)) # 3 channel grayscale image for identity L1 loss
     transform_list.append(transforms.RandomHorizontalFlip()) # Random flip
     transform_list.append(transforms.ToTensor()) # Convert to tensor
-    transform_list.append(transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5))) # Normalize 
+    transform_list.append(transforms.Normalize((0.5,0.5,0.5), (0.5,0.5,0.5))) # Normalize values between -1 and 1
     return transforms.Compose(transform_list)
 

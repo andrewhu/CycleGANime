@@ -14,7 +14,7 @@ if __name__ == "__main__":
     IM_SIZE = 512 # Input image size
     CROP_SIZE = 512 # If you're running out of gpu memory, set this to something smaller than IM_SIZE
 
-    SEED = 12 # my lucky number
+    SEED = 12 # me lucky number :))
     utils.set_seed(SEED)
 
     RESUME_TRAINING = False
@@ -30,6 +30,7 @@ if __name__ == "__main__":
     # Define model
     model = cycleganime.CycleGANime(input_nc=3, output_nc=3, gpu_id=GPU_ID)
 
+    # Load previous weights (or not)
     if RESUME_TRAINING:
         model.load_weights(epoch=START_EPOCH)
     else:
@@ -40,19 +41,21 @@ if __name__ == "__main__":
     plot_title = f"Image size {IM_SIZE}, Batch size {BATCH_SIZE}"
 
     for epoch in range(START_EPOCH,NUM_EPOCHS):
-        # break
-        print(f"Starting epoch {epoch}")
         epoch_start = time.time()
         for iteration, data in enumerate(train_dataloader):
+            period_start = time.time()
+
             # Train model
             model.set_data(data)
             model.optimize_parameters()
 
             # Print losses
             if iteration % 10 == 0: 
+                period_duration = time.time()-period_start
+                period_start = time.time()
                 losses = model.get_losses()
-                print("epoch %s - iter %s - G_A %.4f - G_B %.4f - G_A %.4f - G_B %.4f" % 
-                (str(epoch).ljust(3, ' '), str(iteration).ljust(4, ' '), losses['G_A'], losses['G_B'], losses['D_A'], losses['D_B']))
+                print("epoch %s - iter %s - G_A %.4f - G_B %.4f - D_A %.4f - D_B %.4f - %.2f it/s" % 
+                (str(epoch).ljust(3, ' '), str(iteration).ljust(4, ' '), losses['G_A'], losses['G_B'], losses['D_A'], losses['D_B'], period_duration/10))
 
                 # Append losses
                 loss_history.append(losses)
