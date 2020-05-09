@@ -1,7 +1,7 @@
 # CycleGANime
 Automatic lineart colorization with [CycleGAN](https://junyanz.github.io/CycleGAN/)
 
-Demo: [cycleganime.drew.hu](https://cyclegan.drew.hu) \
+Demo: [cycleganime.drew.hu](https://cycleganime.drew.hu) \
 Blog post: [blog.drew.hu/cycleganime](https://blog.drew.hu/cycleganime)
 
 <img src="splash.jpg">

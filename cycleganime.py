@@ -145,23 +145,22 @@ class CycleGANime():
 
     def save_weights(self, epoch, it):
         """Save model weights. Only save generator weights, except for the latest epoch"""
+
+        checkpoints_base_folder = f"checkpoints"
         # Save generator weights
-        folder_name = f"checkpoints/{str(epoch).zfill(3)}_{str(it).zfill(4)}" # save folder
+        folder_name = f"{checkpoints_base_folder}/{str(epoch).zfill(3)}_{str(it).zfill(4)}" # save folder
         if not os.path.exists(folder_name):
             os.mkdir(folder_name)
-
         G_A_filename = f"{folder_name}/netG_A_{str(epoch).zfill(3)}_{str(it).zfill(4)}.pth"
         torch.save(self.netG_A.state_dict(), G_A_filename)
 
         # Save latest weights
-        if not os.path.exists("checkpoints/latest"):
-            os.mkdir("checkpoints/latest")
-
-        G_A_filename = f"checkpoints/latest/netG_A_latest.pth"
-        G_B_filename = f"checkpoints/latest/netG_B_latest.pth"
-        D_A_filename = f"checkpoints/latest/netD_A_latest.pth"
-        D_B_filename = f"checkpoints/latest/netD_B_latest.pth"
-        
+        if not os.path.exists(f"{checkpoints_base_folder}/latest"):
+            os.mkdir(f"{checkpoints_base_folder}/latest")
+        G_A_filename = f"{checkpoints_base_folder}/latest/netG_A_latest.pth"
+        G_B_filename = f"{checkpoints_base_folder}/latest/netG_B_latest.pth"
+        D_A_filename = f"{checkpoints_base_folder}/latest/netD_A_latest.pth"
+        D_B_filename = f"{checkpoints_base_folder}/latest/netD_B_latest.pth"
         torch.save(self.netG_A.state_dict(), G_A_filename)
         torch.save(self.netG_B.state_dict(), G_B_filename)
         torch.save(self.netD_A.state_dict(), D_A_filename)
@@ -169,12 +168,16 @@ class CycleGANime():
 
     def load_weights(self, epoch):
         """Load latest weights to resume training"""
-        weights_path = "checkpoints/latest"
+        checkpoints_base_folder = f"checkpoints"
 
-        netG_A_state_dict = torch.load(os.path.join("checkpoints/atest/netG_A_latest.pth"), map_location=self.device)
-        netG_B_state_dict = torch.load(os.path.join("checkpoints/atest/netG_B_latest.pth"), map_location=self.device)
-        netD_A_state_dict = torch.load(os.path.join("checkpoints/atest/netD_A_latest.pth"), map_location=self.device)
-        netD_B_state_dict = torch.load(os.path.join("checkpoints/atest/netD_B_latest.pth"), map_location=self.device)
+
+        weights_path = f"{checkpoints_base_folder}/latest"
+        print(f"Loading weights from '{weights_path}'")
+
+        netG_A_state_dict = torch.load(os.path.join(f"{checkpoints_base_folder}/latest/netG_A_latest.pth"), map_location=self.device)
+        netG_B_state_dict = torch.load(os.path.join(f"{checkpoints_base_folder}/latest/netG_B_latest.pth"), map_location=self.device)
+        netD_A_state_dict = torch.load(os.path.join(f"{checkpoints_base_folder}/latest/netD_A_latest.pth"), map_location=self.device)
+        netD_B_state_dict = torch.load(os.path.join(f"{checkpoints_base_folder}/latest/netD_B_latest.pth"), map_location=self.device)
 
         self.netG_A.load_state_dict(netG_A_state_dict)
         self.netG_B.load_state_dict(netG_B_state_dict)
@@ -189,34 +192,3 @@ class CycleGANime():
         self.scheduler_G.step()
         self.scheduler_D.step()
 
-
-
-
-
-    # def run_inference(self, data):
-    #     with torch.no_grad():
-    #         self.netG_A.eval()
-    #         real_A = data['A'].unsqueeze(0)
-    #         fake_B = self.netG_A(real_A)
-    #         return fake_B.permute(0,2,3,1).cpu().numpy()
-            
-    # def load_weights_for_inference(self, weights_path):
-    #     """Load generator A2B weights for inference"""
-    #     print("Loading weights from", weights_path)
-    #     netG_A_state_dict = torch.load(weights_path, map_location=self.device)
-
-    #     # We trained the network with DataParallel so we'll remove it here
-    #     # from collections import OrderedDict
-    #     # new_state_dict = OrderedDict()
-    #     # for k, v in netG_A_state_dict.items():
-    #     #     name = k[7:]
-    #     #     new_state_dict[name] = v
-
-    #     self.netG_A.load_state_dict(new_state_dict)
-
-
-
-
-
-
-        

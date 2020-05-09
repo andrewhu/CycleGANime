@@ -17,8 +17,8 @@ if __name__ == "__main__":
     SEED = 12 # me lucky number :))
     utils.set_seed(SEED)
 
-    RESUME_TRAINING = False
-    START_EPOCH = 0 # Lets learning rate scheduler know which epoch we're starting from
+    RESUME_TRAINING = True
+    START_EPOCH = 7 # Lets learning rate scheduler know which epoch we're starting from
 
     # Dataloader for training
     train_dataloader = utils.get_dataloader(DATASET_PATH, phase='train', batch_size=BATCH_SIZE, im_size=IM_SIZE, crop_size=CROP_SIZE, num_workers=2)
@@ -54,7 +54,7 @@ if __name__ == "__main__":
                 period_duration = time.time()-period_start
                 period_start = time.time()
                 losses = model.get_losses()
-                print("epoch %s - iter %s - G_A %.4f - G_B %.4f - D_A %.4f - D_B %.4f - %.2f it/s" % 
+                print("epoch %s - iter %s - G_A %.4f - G_B %.4f - D_A %.4f - D_B %.4f - %.4f it/s" % 
                 (str(epoch).ljust(3, ' '), str(iteration).ljust(4, ' '), losses['G_A'], losses['G_B'], losses['D_A'], losses['D_B'], period_duration/10))
 
                 # Append losses
