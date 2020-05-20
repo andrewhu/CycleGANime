@@ -1,9 +1,17 @@
 import numpy as np
 import torchvision.transforms as transforms
 from PIL import Image
+import random
+import requests
+import json
+import config
 
-def verify_recaptcha(recaptcha):
-    pass
+def verify_recaptcha(captcha):
+    """Verifies recaptcha response"""
+    response = requests.post('https://www.google.com/recaptcha/api/siteverify',
+                             data={'secret': config.RC_SECRET,
+                                   'response': captcha})
+    return json.loads(response.text)['success']
 
 def get_transforms():
     """Image transforms"""
@@ -24,34 +32,30 @@ def set_im_mean(im, mean=200, max_iters=50):
     im = im.astype(np.float32)
     
     # Mean of non-white pixels
-    initial_mean = im[im<254].mean()
+    initial_mean = im[im<250].mean()
 
     # Iteratively brighten or darken non-white pixels
     if initial_mean < mean: # image is darker
         for _ in range(max_iters):
-            im_mean = im[im<254].mean()
+            im_mean = im[im<250].mean()
             if im_mean > mean: # If our image is bright enough
                 break
             x = abs(mean - im_mean)/255 + 0.005
-            im[im<254] = im[im<254]*(1-x)+255*x # Brighten image
+            im[im<250] = im[im<250]*(1-x)+255*x # Brighten image
     else: # image is brighter
         for _ in range(max_iters):
-            im_mean = im[im<254].mean()
+            im_mean = im[im<250].mean()
             if im_mean < mean: # If our iamge is dark enough
                 break
-            im[im<254] = im[im<254] * 0.995 - 255 * .005 # Darken image
+            im[im<250] = im[im<250] * 0.995 - 255 * .005 # Darken image
 
     return im.astype(np.uint8)
 
+def create_code():
+    """Generates unique 5-letter code"""
+    alphabet = 'BCDFGHJLMNPQRSTVWXZ' # Letters excluding vowels and K
+    return ''.join(random.choices(alphabet, k=5))
 
-# def transform_image(im):
-#     im = set_im_mean(im)
-
-#     im = Image.fromarray(im)
-#     transform = get_transforms()
-#     im = transform(im)
-#     return im
-    
 
 
 

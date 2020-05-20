@@ -3,16 +3,11 @@ import torch.nn as nn
 import functools
 
 class CycleGANime():
-    """Lineart colorization model based on CycleGAN
-    
-    This is the model for serving on CPU
-    """
-    def __init__(self):
+    """CycleGAN network (just the generator A) for serving"""
+    def __init__(self, n_blocks, ngf):
         self.device = torch.device('cpu')
-        self.netG_A = ResnetGenerator(input_nc=3, output_nc=3, ngf=64, n_blocks=9).to(self.device)
+        self.netG_A = ResnetGenerator(input_nc=3, output_nc=3, ngf=ngf, n_blocks=n_blocks).to(self.device)
         self.netG_A.eval()
-        with open("model_log.txt", "a") as f:
-            f.write("Model init\n")
 
     def run_inference(self, im):
         with torch.no_grad():
