@@ -1,6 +1,6 @@
 <template>
     <div id="home">
-        <h1 style="position: absolute; font-size: 2em;left: 50%;top: 20px;transform: translateX(-50%);">Note: Site is currently under construction</h1>
+<!--        <h1 style="position: absolute; font-size: 2em;left: 50%;top: 20px;transform: translateX(-50%);">Note: Site is currently under construction</h1>-->
         <!-- Top text font is "Sketch 3D" and bottom text font is "Umeboshi" -->
         <div id="title-wrap">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 529.11 138.45">
@@ -79,7 +79,7 @@
                     </button>
                 </router-link>
             </div>
-            <button v-on:click="upload()" type="button" id="upload-image">
+            <button v-on:click="initUpload()" type="button" id="upload-image">
                 Colorize
             </button>
             <div id="upload-message">Uploading...</div>
@@ -88,10 +88,32 @@
                  data-callback="upload"
                  data-size="invisible"></div>
         </div>
-        <div id="about">
-            <a href="#">About</a>
-        </div>
+        <a id="about-show" v-on:click="aboutShow = !aboutShow">About</a>
+        <transition name="fade">
+            <div v-show="aboutShow" id="about">
+                <div v-on:click="aboutShow = !aboutShow" id="click-back">&times;</div>
+                <div id="about-inner">
+                    <p>
+                        CycleGANime is an automatic lineart colorization tool based on CycleGAN
+                        <a href="https://arxiv.org/abs/1703.10593" target="_blank">(Zhu et al. 2017)</a>.
+                    </p>
+                    <br/>
+                    <p>
+                        For details on how this was built, check out the
+                        <a href="https://blog.drew.hu/cycleganime" target="_blank">blog post</a>. Source code and pretrained
+                        models are on <a href="https://github.com/andrewhu/CycleGANime" target="_blank">Github</a>.
+                    </p>
+                    <br/>
+                    <p id="about-donate">
+                        Fortunately I don't have to pay server costs because I have a lot of cloud credits. If you would
+                        like to show your support for this project, please consider making a donation to <a href="https://code.org/donate" target="_blank">code.org</a>
+                        so that we can get more underrepresented groups into computer science.
+                    </p>
+                </div>
+            </div>
+        </transition>
         <div id="load-monospace">a</div>
+        <div id="load-proxima">a</div>
     </div>
 </template>
 
@@ -111,6 +133,11 @@
     }
 
     export default {
+        data() {
+            return {
+                aboutShow: false
+            }
+        },
         methods: {
             fileChosen() {
                 console.log("file change")
@@ -148,6 +175,7 @@
                     show("#image-preview", "inline-block")
                     document.getElementById("image-preview").src = event.target.result;
                 }
+                document.getElementById("title-wrap").classList.add("up");
             },
             cancel() {
               /* Removes file upload */
@@ -157,11 +185,11 @@
                 hide("#upload-image");
                 show("#upload-choose-image")
                 document.getElementById("title-wrap").classList.remove("up")
-                document.getElementById("upload-container").classList.remove("up")
+                // document.getElementById("upload-container").classList.remove("up")
                 document.getElementById('file-input').value = '';
             },
             initUpload() {
-                // grecaptcha.execute();
+                grecaptcha.execute();
 
             },
             upload(recaptcha='none') {
@@ -171,24 +199,33 @@
                 var formData = new FormData()
                 formData.append("image", document.getElementById('file-input').files[0]);
                 formData.append("recaptcha", recaptcha);
-                console.log(formData)
+                var this_ = this;
+                // console.log(formData)
                 axios.post("/api/paint", formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(function(resp) {
                     // console.log(resp)
-                    if (resp.status != 200) {
+                    if (resp.status !== 200) {
                         show("#error")
                         setText("#error", `Error: ${resp.data}`)
                         show("#upload-image", "inline-block");
                         hide("#upload-message");
+                    }else {
+                        var code = resp.data;
+                        this_.$router.push({name: 'results', params: {id: code}});
                     }
                 })
             }
         },
         mounted() {
             window.upload = this.upload;
+            var recaptchaJS = document.createElement('script');
+            recaptchaJS.src = "https://www.google.com/recaptcha/api.js";
+
+            recaptchaJS.async = true;
+            document.head.appendChild(recaptchaJS);
         }
     }
 </script>
@@ -203,7 +240,7 @@
         width: 100%;
         height: 100%;
         position: absolute;
-        overflow: hidden;
+        /*overflow: hidden;*/
     }
 
     #title-wrap {
@@ -217,9 +254,9 @@
         max-width: 800px;
     }
 
-    /*#title-wrap.up {*/
-    /*    top: 15vh;*/
-    /*}*/
+    #title-wrap.up {
+        margin-top: 10vh;
+    }
 
     /* Title SVG */
     .cls-1 {
@@ -240,7 +277,7 @@
 
     @media (max-width: 1024px) {
         #title-wrap {
-            top: 15vh;
+            margin-top: 15vh;
         }
 
         #description {
@@ -287,6 +324,7 @@
         /*margin-bottom: 15px;*/
         font-family: "Ubuntu Mono", monospace;
         display: none;
+        padding-top: 5px;
     }
     #cancel {
         text-decoration: underline;
@@ -396,20 +434,95 @@
         /*top: 75vh;*/
     }
 
-    #about a {
-        color: #f9276f;
-        font-size: 1.4em;
-        transition: 150ms ease;
-    }
-
-    #about a:hover {
-        color: #fc93b7
-    }
-
     #load-monospace {
         font-size: 0;
         position:static;
         color: transparent;
         font-family: "Ubuntu Mono", monospace;
+        width: 0;
+        height: 0
+    }
+    #load-proxima {
+        font-size: 0;
+        position:static;
+        color: transparent;
+        font-family: "Proxima Nova", monospace;
+        width: 0;
+        height: 0
+    }
+    #about-show {
+        font-size: 1.4em;
+        text-decoration: underline;
+        cursor: pointer;
+        padding-bottom: 40px;
+    }
+    /* About section */
+    #about {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #f9e0fa;
+        z-index: 100;
+        position: fixed;
+    }
+    #about-inner {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: left;
+        width: 40vw;
+        font-size: 1.8em;
+        line-height: 1.3em;
+        cursor: default;
+    }
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity 200ms ease-in-out;
+    }
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+    }
+    @media (max-width: 1040px) {
+        #about-inner {
+            width: 90vw;
+            font-size: 1.4em;
+        }
+
+    }
+    #about-inner p {
+        font-family: "Proxima Nova", sans-serif;
+    }
+    #about-donate {
+        font-size: 0.7em;
+        line-height: 1.2em;
+    }
+
+    /*@media (max-width: 900px) {*/
+    /*    #about-inner {*/
+    /*        font-size: 1em;*/
+    /*    }*/
+    /*}*/
+    /*@media (max-width: 667px) {*/
+    /*    #about-inner {*/
+    /*        font-size: 0.7em;*/
+    /*    }*/
+    /*}*/
+    /* 'X' button on about page */
+    #click-back {
+        display: block;
+        left: 50%;
+        position: fixed;
+        transform: translateX(-50%);
+        top: 5vh;
+        z-index: 101;
+        font-size: 50px;
+        line-height: 40px;
+        transition: 150ms ease-out;
+        cursor: pointer;
+        font-family: Arial, sans-serif;
+    }
+    #click-back:hover {
+        color: #fc93b7;
     }
 </style>

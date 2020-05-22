@@ -9,4 +9,6 @@ config.py
 test_images/
 test_out/
 
-log.txt
+log.txt # inference log
+
+result_ids.db # kv store 

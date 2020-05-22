@@ -20,6 +20,12 @@
         url('/fonts/UbuntuMono-Regular.woff') format('woff'),
         url('/fonts/UbuntuMono-Regular.ttf') format('truetype');
   }
+  @font-face {
+    font-family: "Proxima Nova";
+    src: url('/fonts/ProximaNovaSoft-Regular.woff2') format('woff2'),
+         url('/fonts/ProximaNovaSoft-Regular.woff') format('woff'),
+         url('/fonts/ProximaNovaSoft-Regular.ttf') format('truetype');
+  }
 
 
   /* CSS RESET */
@@ -83,10 +89,44 @@
     background: transparent;
   }
 
+  /*Page fade in*/
+  @-moz-keyframes pageFadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @-ms-keyframes pageFadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @-webkit-keyframes pageFadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes pageFadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
   html, body {
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    /*overflow: hidden;*/
     max-width: 100vw;
     max-height: 100vh;
   }
@@ -99,7 +139,13 @@
     top: 0;
     position: absolute;
     z-index: -2;
-    overflow: hidden;
+    /*overflow: hidden;*/
+    /* Page fade in */
+    -moz-animation: pageFadeIn 1000ms;
+    -ms-animation: pageFadeIn 1000ms;
+    -webkit-animation: pageFadeIn 1000ms;
+    animation: pageFadeIn 1000ms;
+    /*padding-bottom: 100px;*/
   }
 
   #top, #left, #right, #bottom {
@@ -135,5 +181,13 @@
     right: 0;
     height: 6px;
     width: 100%;
+  }
+  a, a:visited {
+    color: #f9276f;
+    transition: 150ms ease;
+  }
+
+  a:hover {
+    color: #fc93b7
   }
 </style>
