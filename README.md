@@ -5,7 +5,7 @@ Built to color some of [my friend's lineart](https://instagram.com/kuronaken).
 Demo: [cycleganime.drew.hu](https://cycleganime.drew.hu) \
 Blog post: [blog.drew.hu/cycleganime](https://blog.drew.hu/cycleganime)
 
-<img src="_assets/splash.jpg">
+<img src="_assets/img/splash.jpg">
 
 ## Dependencies
 Tested on, Ubuntu 20.04, Python 3.8, Pytorch 1.5, CUDA 10.2
@@ -45,11 +45,18 @@ To train, modify the training options in `train.py` then run `python train.py`.
   But even then, loss doesn't really tell you how well your model is doing, so make sure to have a set of images to validate your model with.
 
 ## Pretrained models
-The pretrained models are ~300MB since I used 128 conv filters (which I now regret because it was probably unnecessary
-and increases server requirements), but there should be little problem running the model on your machine.
+The pretrained models are each ~300MB since I used 128 conv filters (which I now regret because it was probably unnecessary
+and increases server requirements), but there should be little problem running the model on a local machine.
 
 
+|<img src="_assets/img/parts/pink_part.jpg" width=128> | <img src="_assets/img/parts/ice_part.jpg" width=128> | <img src="_assets/img/parts/nature_part.jpg" width=128> | 
+:-------------------------:|:-------------------------:|:-------------------------:|
+|[Download](https://files.drew.hu/cycleganime/models/256_15_128/aqua.pth) |[Download](https://files.drew.hu/cycleganime/models/256_15_128/ice.pth)  |[Download](https://files.drew.hu/cycleganime/models/256_15_128/elf.pth)  |
 
+
+| <img src="_assets/img/parts/red_part.jpg" width=128> | <img src="_assets/img/parts/smoke_part.jpg" width=128> | <img src="_assets/img/parts/aqua_part.jpg" width=128> | 
+:-------------------------:|:-------------------------:|:-------------------------:|
+|[Download](https://files.drew.hu/cycleganime/models/256_15_128/red.pth) |[Download](https://files.drew.hu/cycleganime/models/256_15_128/smoke.pth)  |[Download](https://files.drew.hu/cycleganime/models/256_15_128/aqua.pth)  |
 
 ## Deployment
 The frontend site was built with Vue and the backend was built as a Flask microservice using Redis as a task queue.
