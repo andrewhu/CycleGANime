@@ -5,7 +5,7 @@ Built to color some of [my friend's lineart](https://instagram.com/kuronaken).
 Demo: [cycleganime.drew.hu](https://cycleganime.drew.hu) \
 Blog post: [blog.drew.hu/cycleganime](https://blog.drew.hu/cycleganime)
 
-<img src="_assets/img/splash.jpg">
+<img src="_assets/img/splash2.jpg">
 
 ## Dependencies
 Tested on, Ubuntu 20.04, Python 3.8, Pytorch 1.5, CUDA 10.2

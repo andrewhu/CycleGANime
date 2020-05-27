@@ -109,7 +109,7 @@
                         like to show your support for this project, please consider making a donation to
                         <a href="https://code.org/donate" target="_blank">code.org</a>
                         or a
-                        <a href="https://girlswhocode.com/" target="_blank">similar</a>
+                        <a href="https://girlswhocode.com/" target="_blank">similar</a>&nbsp;
                         <a href="https://4-h.org/parents/programs-at-a-glance/" target="_blank">charity</a>
                         so that we can get more underrepresented students into computer science.
                     </p>
