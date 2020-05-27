@@ -6,9 +6,3 @@ __pycache__/
 
 config.py
 
-test_images/
-test_out/
-
-log.txt # inference log
-
-result_ids.db # kv store 
