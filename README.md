@@ -2,7 +2,7 @@
 Automatic lineart colorization with [CycleGAN](https://junyanz.github.io/CycleGAN/).
 Built to color some of [my friend's lineart](https://instagram.com/kuronaken).
 
-Demo: [cycleganime.drew.hu](https://cycleganime.drew.hu) \
+Demo: [cycleganime.drew.hu](https://cycleganime.drew.hu) (not running anymore) \
 Blog post: [blog.drew.hu/cycleganime](https://blog.drew.hu/cycleganime)
 
 <img src="_assets/img/splash2.jpg" width="100%">
@@ -66,6 +66,4 @@ A serverless solution may be more cost-effective, but I haven't explored it yet.
 Code is based on the original [CycleGAN PyTorch implementation](https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix). 
 
 Inspired by Kevin Frans' [DeepColor](https://github.com/kvfrans/deepcolor), which was inspired by [Petalica Paint](https://petalica-paint.pixiv.dev/index_en.html).
-
-Many of the lineart images used for testing were drawn by my talented friend Ashley ([@kuronaken](https://www.instagram.com/kuronaken/) on Instagram).
 
