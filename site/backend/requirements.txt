@@ -11,7 +11,7 @@ Jinja2==2.11.2
 MarkupSafe==1.1.1
 numpy==1.18.4
 opencv-python==4.2.0.34
-Pillow==7.1.2
+Pillow==8.1.1
 redis==3.5.2
 requests==2.23.0
 rq==1.4.1
