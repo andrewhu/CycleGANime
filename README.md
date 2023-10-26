@@ -2,7 +2,7 @@
 Automatic lineart colorization with [CycleGAN](https://junyanz.github.io/CycleGAN/).
 Built to color some of [my friend's lineart](https://instagram.com/kuronaken).
 
-Blog post: [[blog.drew.hu/cycleganime](https://blog.drew.hu/2020-05-cycleganime)]([https://blog.drew.hu/cycleganime](https://blog.drew.hu/2020-05-cycleganime/))
+Blog post: [https://blog.drew.hu/2020-05-cycleganime](https://blog.drew.hu/2020-05-cycleganime)
 
 <img src="_assets/img/splash2.jpg" width="100%">
 
