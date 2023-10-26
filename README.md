@@ -2,8 +2,7 @@
 Automatic lineart colorization with [CycleGAN](https://junyanz.github.io/CycleGAN/).
 Built to color some of [my friend's lineart](https://instagram.com/kuronaken).
 
-Demo: [cycleganime.drew.hu](https://cycleganime.drew.hu) (not running anymore) \
-Blog post: [blog.drew.hu/cycleganime](https://blog.drew.hu/cycleganime)
+Blog post: [[blog.drew.hu/cycleganime](https://blog.drew.hu/2020-05-cycleganime)]([https://blog.drew.hu/cycleganime](https://blog.drew.hu/2020-05-cycleganime/))
 
 <img src="_assets/img/splash2.jpg" width="100%">
 
@@ -45,9 +44,7 @@ To train, modify the training options in `train.py` then run `python train.py`.
   But even then, loss doesn't really tell you how well your model is doing, so make sure to have a set of images to validate your model with.
 
 ## Pretrained models
-The pretrained models are each ~300MB since I used 128 conv filters (which I now regret because it was probably unnecessary
-and increases server requirements), but there should be little problem running the model on a local machine.
-
+The pretrained models are each ~300MB since I used 128 conv filters (which was probably unnecessarily large), but there should be little problem running the model on a local machine.
 
 |<img src="_assets/img/parts/pink_part.jpg" width=128> | <img src="_assets/img/parts/ice_part.jpg" width=128> | <img src="_assets/img/parts/nature_part.jpg" width=128> | 
 :-------------------------:|:-------------------------:|:-------------------------:|
