@@ -19,4 +19,4 @@ six==1.14.0
 torch==1.5.0+cpu
 torchvision==0.6.0+cpu
 urllib3==1.25.9
-Werkzeug==1.0.1
+Werkzeug==3.0.1
